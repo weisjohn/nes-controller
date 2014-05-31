@@ -39,9 +39,9 @@ See the [example.js](example.js) file for more detailed usage.
  - `analogNS`
  - `analogEW`
 
-The directional values are either `0`, `127`, `255`.
-
 `analogNS` and `analogEW` receive one value, while `analog` receives an array of two values.
+
+The directional values are either `0`, `127`, `255`.
 
 
 ### others
