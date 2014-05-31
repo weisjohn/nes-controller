@@ -20,7 +20,6 @@ player1.on('pressA', function() {
 player1.on('releaseA', function() {
     console.log('A was released');
 });
-
 ```
 
 See the [example.js](example.js) file for more detailed usage.
