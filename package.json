@@ -1,0 +1,22 @@
+{
+  "name": "nes-controller",
+  "version": "0.0.1",
+  "description": "Easy to use event interface to a Gtron NES Controller",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/weisjohn/nes-controller.git"
+  },
+  "author": "John Weis <weis.john@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/weisjohn/nes-controller/issues"
+  },
+  "homepage": "https://github.com/weisjohn/nes-controller",
+  "dependencies": {
+    "node-hid": "~0.3.1"
+  }
+}
