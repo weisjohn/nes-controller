@@ -28,6 +28,9 @@ function NESController(path, controller) {
 
     this.on("data", function(data) {
 
+        // early bolt for optimization improvements
+        if (data.toString('hex') == this.controlState.toString('hex')) return;
+
         var analogEW = data[0];
         var analogNS = data[1];
         if (this.controlState[0] != analogEW) {
