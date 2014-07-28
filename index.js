@@ -1,14 +1,30 @@
 var HID = require('node-hid');
 
-function NESController(path) {
+var definitions = {
+    "2Axes 11Keys Game  Pad" : {
+        "buttons": {
+            "A":        [3, 0x01],
+            "B":        [3, 0x02],
+            "SELECT":   [4, 0x01],
+            "START":    [4, 0x02],
+        }
+    },
+    "USB Gamepad " : {
+        "buttons": {
+            "A":        [5, 0x20],
+            "B":        [5, 0x40],
+            "SELECT":   [6, 0x10],
+            "START":    [6, 0x20],
+        }
+    }
+}
+
+function NESController(path, controller) {
     HID.HID.call(this, path);
     this.controlState = new Buffer(8);
-    this.buttonAddresses = {
-        "A":        [3, 0x01],
-        "B":        [3, 0x02],
-        "SELECT":   [4, 0x01],
-        "START":    [4, 0x02],
-    };
+
+
+    this.buttons = controller.buttons;
 
     this.on("data", function(data) {
 
@@ -23,8 +39,8 @@ function NESController(path) {
             this.emit("analog", [analogEW, analogNS]);
         }
 
-        for (key in this.buttonAddresses) {
-            var address = this.buttonAddresses[key];
+        for (key in this.buttons) {
+            var address = this.buttons[key];
             var chunk = address[0];
             var mask = address[1];
             if (
@@ -32,6 +48,7 @@ function NESController(path) {
                 (this.controlState[chunk] & mask) !=
                 (data[chunk] & mask)
             ) {
+
                 if ((data[chunk] & mask) === mask) {
                     this.emit("press"+key);
                 } else {
@@ -50,10 +67,12 @@ NESController.prototype.constructor = NESController;
 
 module.exports = function() {
     var controllers = [];
+
     HID.devices().forEach(function(device) {
-        if (device.product === '2Axes 11Keys Game  Pad') {
-            controllers.push(new NESController(device.path));
-        }
+        if (!~Object.keys(definitions).indexOf(device.product)) return;
+        var definition = definitions[device.product];
+        var controller = new NESController(device.path, definition);
+        controllers.push(controller);
     });
     return controllers;
 }
