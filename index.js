@@ -30,17 +30,17 @@ var definitions = {
 function NESController(path, controller) {
     HID.HID.call(this, path);
     this.controlState = new Buffer(8);
+    this.controlString = "";
 
     this.buttons = controller.buttons;
     this.dpad = controller.dpad;
 
-    var _data;
-
     this.on("data", function(data) {
 
         // early bolt for optimization improvements
-        if (data.toString('hex') == this.controlState.toString('hex')) return;
+        if (data.toString('hex') == this.controlString) return;
 
+        // check d-pad state
         var analogEW = data[this.dpad.EW];
         var analogNS = data[this.dpad.NS];
 
@@ -53,6 +53,7 @@ function NESController(path, controller) {
             this.emit("analog", [analogEW, analogNS]);
         }
 
+        // check buttons
         for (key in this.buttons) {
             var address = this.buttons[key];
             var chunk = address[0];
@@ -71,8 +72,9 @@ function NESController(path, controller) {
             }
         };
 
-        // save state to compare against next frame
+        // save state to compare against next frame, update cache
         data.copy(this.controlState);
+        this.controlString = this.controlState.toString('hex');
     });
 }
 
