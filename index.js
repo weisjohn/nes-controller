@@ -7,6 +7,10 @@ var definitions = {
             "B":        [3, 0x02],
             "SELECT":   [4, 0x01],
             "START":    [4, 0x02],
+        },
+        "dpad" : {
+            "EW" : 0,
+            "NS" : 1
         }
     },
     "USB Gamepad " : {
@@ -15,6 +19,10 @@ var definitions = {
             "B":        [5, 0x40],
             "SELECT":   [6, 0x10],
             "START":    [6, 0x20],
+        },
+        "dpad" : {
+            "EW" : 3,
+            "NS" : 4
         }
     }
 }
@@ -23,21 +31,24 @@ function NESController(path, controller) {
     HID.HID.call(this, path);
     this.controlState = new Buffer(8);
 
-
     this.buttons = controller.buttons;
+    this.dpad = controller.dpad;
+
+    var _data;
 
     this.on("data", function(data) {
 
         // early bolt for optimization improvements
         if (data.toString('hex') == this.controlState.toString('hex')) return;
 
-        var analogEW = data[0];
-        var analogNS = data[1];
-        if (this.controlState[0] != analogEW) {
+        var analogEW = data[this.dpad.EW];
+        var analogNS = data[this.dpad.NS];
+
+        if (this.controlState[this.dpad.EW] != analogEW) {
             this.emit("analogEW", analogEW);
             this.emit("analog", [analogEW, analogNS]);
         }
-        if (this.controlState[1] != analogNS) {
+        if (this.controlState[this.dpad.NS] != analogNS) {
             this.emit("analogNS", analogNS);
             this.emit("analog", [analogEW, analogNS]);
         }
