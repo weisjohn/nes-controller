@@ -88,6 +88,7 @@ function NESController(path, controller) {
         data.copy(this.controlState);
         this.controlString = this.controlState.toString('hex');
     });
+
 }
 
 NESController.prototype = Object.create(HID.HID.prototype);
