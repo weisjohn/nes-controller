@@ -93,8 +93,8 @@ function NESController(path, controller) {
 NESController.prototype = Object.create(HID.HID.prototype);
 NESController.prototype.constructor = NESController;
 
+var controllers = [];
 module.exports = function() {
-    var controllers = [];
 
     HID.devices().forEach(function(device) {
         if (!~Object.keys(definitions).indexOf(device.product)) return;
@@ -104,3 +104,9 @@ module.exports = function() {
     });
     return controllers;
 }
+
+process.on('exit', function() {
+    controllers.forEach(function(controller) {
+        controller.close();
+    });
+});
