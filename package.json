@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/weisjohn/nes-controller",
   "dependencies": {
-    "node-hid": "~0.3.1"
+    "node-hid": "~0.4.0"
   }
 }
