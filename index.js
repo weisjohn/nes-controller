@@ -24,6 +24,18 @@ var definitions = {
             "EW" : 3,
             "NS" : 4
         }
+    },
+    "NES PC Game Pad" : {
+        "buttons": {
+            "A":        [5, 0x20],
+            "B":        [5, 0x10],
+            "SELECT":   [5, 0x40],
+            "START":    [5, 0x80],
+        },
+        "dpad" : {
+            "EW" : 0,
+            "NS" : 4
+        }        
     }
 }
 
