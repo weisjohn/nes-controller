@@ -2,7 +2,7 @@ nes-controller
 ==============
 
 Interface to a
-[Gtron USB Nintendo Entertainment System controller](http://www.amazon.com/gp/product/B002YVD3KM).
+[Gtron USB Nintendo Entertainment System controller](http://www.amazon.com/gp/product/B002YVD3KM) or [Tomee NES to USB adapter](http://www.amazon.com/gp/product/B00HM3QCN2).
 Forked from [@dustMason](https://github.com/dustMason)'s [n64controller](https://github.com/dustMason/n64controller) module.
 
 `npm install nes-controller`
