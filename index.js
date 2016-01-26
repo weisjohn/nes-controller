@@ -13,7 +13,7 @@ var definitions = {
             "NS" : 1
         }
     },
-    "USB Gamepad " : {
+    "USB Gamepad" : {
         "buttons": {
             "A":        [5, 0x20],
             "B":        [5, 0x40],
